@@ -861,7 +861,46 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeRangeFilter,
   };
 
+  // Dark mode functionality
+  const darkModeToggle = document.getElementById("dark-mode-toggle");
+  const darkModeIcon = darkModeToggle.querySelector(".icon");
+  const darkModeLabel = darkModeToggle.querySelector(".label");
+
+  // Check for saved dark mode preference or default to light mode
+  function initializeDarkMode() {
+    const isDarkMode = localStorage.getItem("darkMode") === "true";
+    if (isDarkMode) {
+      enableDarkMode();
+    }
+  }
+
+  // Enable dark mode
+  function enableDarkMode() {
+    document.body.classList.add("dark-mode");
+    darkModeIcon.textContent = "☀️";
+    darkModeLabel.textContent = "Light";
+    localStorage.setItem("darkMode", "true");
+  }
+
+  // Disable dark mode
+  function disableDarkMode() {
+    document.body.classList.remove("dark-mode");
+    darkModeIcon.textContent = "🌙";
+    darkModeLabel.textContent = "Dark";
+    localStorage.setItem("darkMode", "false");
+  }
+
+  // Toggle dark mode
+  darkModeToggle.addEventListener("click", () => {
+    if (document.body.classList.contains("dark-mode")) {
+      disableDarkMode();
+    } else {
+      enableDarkMode();
+    }
+  });
+
   // Initialize app
+  initializeDarkMode();
   checkAuthentication();
   initializeFilters();
   fetchActivities();
